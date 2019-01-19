@@ -3,3 +3,10 @@
 ################################################################################
 
 /.vs
+/GlobalDateTimeLab.Console/obj/Debug
+/GlobalDateTimeLab.Console/bin/Debug
+/GlobalDateTimeLab.WebApp/bin
+/GlobalDateTimeLab.WebApp/obj/Debug
+/packages
+/GlobalDateTimeLab.WebApp/Scripts/App/Home.js.map
+/GlobalDateTimeLab.WebApp/Scripts/App/Home.js

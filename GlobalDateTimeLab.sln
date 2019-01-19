@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalDateTimeLab.Console", "GlobalDateTimeLab.Console\GlobalDateTimeLab.Console.csproj", "{F1B5CECB-EB59-41FE-8264-1B274E47CFB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalDateTimeLab.WebApp", "GlobalDateTimeLab.WebApp\GlobalDateTimeLab.WebApp.csproj", "{32CAA2BE-0A38-4E81-BB82-628842850CAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1B5CECB-EB59-41FE-8264-1B274E47CFB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B5CECB-EB59-41FE-8264-1B274E47CFB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B5CECB-EB59-41FE-8264-1B274E47CFB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B5CECB-EB59-41FE-8264-1B274E47CFB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32CAA2BE-0A38-4E81-BB82-628842850CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32CAA2BE-0A38-4E81-BB82-628842850CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32CAA2BE-0A38-4E81-BB82-628842850CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32CAA2BE-0A38-4E81-BB82-628842850CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E44CA851-5730-42F6-A527-30161FD57EAC}
+	EndGlobalSection
+EndGlobal

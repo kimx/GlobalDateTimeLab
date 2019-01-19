@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row" ng-app="HomeApp" ng-controller="HomeController as vm">
+    <div class="col-md-6">
+        Date Input: <input type="date" ng-model="vm.Model.CreateDate" /><button type="button" ng-click="vm.Send(false)">Send</button> <button type="button" ng-click="vm.Send(true)">Send-UseUnSpecified</button>
+        <br />
+        <b>Date Input:</b>
+        <div>{{vm.Model.CreateDate | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+        <b>CreateDateTime From Server:</b>
+        <div>{{vm.Model.CreateDateTime }}</div>
+        <div>{{vm.Model.CreateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+
+        <b>CreateUtcDateTime From Server:</b>
+        <div>{{vm.Model.CreateUtcDateTime }}</div>
+        <div>{{vm.Model.CreateUtcDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+@section scripts{
+
+    <script src="~/Scripts/App/Home.js"></script>
+    <script>
+        new HomeApp();
+    </script>
+}
