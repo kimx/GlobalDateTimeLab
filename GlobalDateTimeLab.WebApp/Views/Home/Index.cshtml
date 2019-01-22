@@ -5,7 +5,17 @@
 
 <div class="row" ng-app="HomeApp" ng-controller="HomeController as vm">
     <div class="col-md-6">
-        Date Input: <input type="date" ng-model="vm.Model.CreateDate" /><button type="button" ng-click="vm.Send(false)">Send</button> <button type="button" ng-click="vm.Send(true)">Send-UseUnSpecified</button>
+        Date Input: <input type="date" ng-model="vm.Model.CreateDate" />
+                    <div>
+                        <button type="button" ng-click="vm.Send(false)">Send</button>
+                        <button type="button" ng-click="vm.Send(true)">Send-(模擬資料庫讀取出來)</button>
+
+                    </div>
+                    <div>
+                        <button type="button" ng-click="vm.SendAPI(false)">Send-API</button>
+                        <button type="button" ng-click="vm.SendAPI(true)">Send-API-(模擬資料庫讀取出來)</button>
+
+                    </div>
         <br />
         <b>Date Input:</b>
         <div>{{vm.Model.CreateDate | date:'yyyy-MM-dd HH:mm:ss'}}</div>

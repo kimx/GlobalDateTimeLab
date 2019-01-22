@@ -28,6 +28,15 @@ class HomeController {
             console.log(response);
             this.Model = response.data;
         });
+
+    }
+
+    SendAPI(useUnSpecified: boolean) {
+        this.Model.UseUnSpecified = useUnSpecified;
+        this.$http.post("/api/HomeApi/PostModel", this.Model).then((response) => {
+            console.log(response);
+            this.Model = response.data;
+        });
     }
 }
 

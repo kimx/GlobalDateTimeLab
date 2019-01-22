@@ -19,7 +19,7 @@ namespace GlobalDateTimeLab.WebApp.Controllers
         public ActionResult Send(HomeModel model)
         {
             model.CreateDateTime = DateTime.UtcNow.AddHours(8);
-            model.CreateUtcDateTime = DateTime.SpecifyKind(model.CreateDateTime, DateTimeKind.Unspecified);
+            model.CreateUtcDateTime = DateTime.UtcNow;
             return new ScJsonResult(model, model.UseUnSpecified);
         }
 
