@@ -20,9 +20,10 @@ class TimeTableController {
             ],
         };
 
-        this.Model.CurrentHour = new Date().getUTCHours();
+        //this.Model.CurrentHour = new Date().getUTCHours();
+        //this.Model.CurrentMinute = 0;
+        this.Model.CurrentTime = new Date(1970, 1, 1, new Date().getUTCHours(), 0, 0);
         this.Model.CurrentTimeZone = this.Model.TimeZones[0];
-        this.Model.CurrentMinute = 0;
     }
 
 
@@ -38,7 +39,7 @@ class TimeTableController {
     }
 
     private GetCurrentTimeZoneUtcHour() {
-        var currentTimeZoneUtcHour = this.Model.CurrentHour - this.Model.CurrentTimeZone.Value;
+        var currentTimeZoneUtcHour = this.Model.CurrentTime.getHours() - this.Model.CurrentTimeZone.Value;
         if (currentTimeZoneUtcHour < 0)
             currentTimeZoneUtcHour = currentTimeZoneUtcHour + 24;
         return currentTimeZoneUtcHour;
@@ -53,17 +54,18 @@ class TimeTableController {
     }
 
     SelectHour(hour: number, timeZone) {
-        this.Model.CurrentHour = this.CalTimeZoneHour(hour, timeZone);
+        var hour = this.CalTimeZoneHour(hour, timeZone);
+        this.Model.CurrentTime = new Date(1970, 1, 1, hour, this.Model.CurrentTime.getMinutes(), 0);
         this.Model.CurrentTimeZone = this.Model.TimeZones.filter(f => f.Name == timeZone.Name)[0];
-        
+
     }
 
     GetCurrentDateTime(timeZone) {
         var currentTimeZoneUtcHour = this.GetCurrentTimeZoneUtcHour();
         var currentTimeZoneHour = currentTimeZoneUtcHour + timeZone.Value;
-        console.log(currentTimeZoneUtcHour);
+      //  console.log(currentTimeZoneUtcHour);
         var now = new Date();
-        var nowUtc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), currentTimeZoneHour, this.Model.CurrentMinute, 0);
+        var nowUtc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), currentTimeZoneHour, this.Model.CurrentTime.getMinutes(), 0);
         return nowUtc;
     }
 
