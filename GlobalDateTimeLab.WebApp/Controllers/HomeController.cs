@@ -15,6 +15,7 @@ namespace GlobalDateTimeLab.WebApp.Controllers
             return View();
         }
 
+
         [HttpPost]
         public ActionResult Send(HomeModel model)
         {
@@ -23,5 +24,12 @@ namespace GlobalDateTimeLab.WebApp.Controllers
             return new ScJsonResult(model, model.UseUnSpecified);
         }
 
+        public ActionResult TimeTable()
+        {
+
+            return View();
+        }
+
+        
     }
 }
