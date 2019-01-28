@@ -11,7 +11,6 @@ namespace GlobalDateTimeLab.WebApp.Controllers
     {
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -26,10 +25,12 @@ namespace GlobalDateTimeLab.WebApp.Controllers
 
         public ActionResult TimeTable()
         {
-
             return View();
         }
 
-        
+        public ActionResult SgForm()
+        {
+            return View();
+        }
     }
 }

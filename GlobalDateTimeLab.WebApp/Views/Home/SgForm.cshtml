@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "SgForm";
+}
+<div ng-app="SgFormApp" ng-controller="SgFormController as vm">
+    <form name="editForm" id="editForm" novalidate>
+
+
+        <div class="row">
+            <div class="col-md-4 form-inline">
+                <input type="text" name="text1" ng-model="vm.Model.Text1" class="form-control"  required/>
+                <input type="text" name="text2" ng-model="vm.Model.Text2" class="form-control"  required/>
+                <input type="text" name="text3" ng-model="vm.Model.Text3" class="form-control" required />
+            </div>
+            <div class="col-md-12">
+                {{editForm.$error.required}}
+            </div>
+        
+        </div>
+    </form>
+</div>
+
+@section scripts{
+
+    <script src="~/Scripts/App/Home.js"></script>
+    <script src="~/Scripts/App/SgForm.js"></script>
+    <script>
+        new SgFormApp();
+    </script>
+}

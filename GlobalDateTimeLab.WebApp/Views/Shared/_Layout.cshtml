@@ -30,8 +30,15 @@
         <br />
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <footer class="main-footer">
+            <div class="container-fluid">
+                <div id="footer-descipt" class="small pull-left"> ...</div>
+                <div class="footer-copyright pull-right hidden-xs">
+           
+                    <span id="footer-descript-pop" class="fa fa-question-circle" data-html="true" data-toggle="popover" data-placement="top" data-animation="false" data-trigger="manual" style="margin-right:10px"></span>
+                    | &copy; 2017 <a href="#">Bud4.net Team.</a> All rights reserved.
+                </div>
+            </div>
         </footer>
     </div>
 
