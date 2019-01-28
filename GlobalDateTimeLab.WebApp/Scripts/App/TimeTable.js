@@ -1,7 +1,6 @@
 var TimeTableApp = /** @class */ (function () {
     function TimeTableApp() {
-        var app = angular.module("TimeTableApp", ["ngMessages", "ngAnimate", "ngRoute", "ngSanitize"])
-            .directive('input', ['$filter', '$timeout', function ($filter, $timeout) { return new SgInputDirective($filter, $timeout); }])
+        var app = angular.module("TimeTableApp", [])
             .controller("TimeTableController", ['$scope', '$http', TimeTableController]);
     }
     return TimeTableApp;
@@ -41,6 +40,8 @@ var TimeTableController = /** @class */ (function () {
     TimeTableController.prototype.CurrentHourClass = function (hour, timeZone) {
         var currentTimeZoneUtcHour = this.GetCurrentTimeZoneUtcHour();
         if (hour == currentTimeZoneUtcHour) {
+            if (timeZone.Name == this.Model.CurrentTimeZone.Name)
+                return "danger";
             return "warning";
         }
         return "";
@@ -60,4 +61,5 @@ var TimeTableController = /** @class */ (function () {
     };
     return TimeTableController;
 }());
+new TimeTableApp();
 //# sourceMappingURL=TimeTable.js.map

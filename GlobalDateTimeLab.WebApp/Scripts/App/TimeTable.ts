@@ -1,7 +1,6 @@
 ﻿class TimeTableApp {
     constructor() {
-        var app = angular.module("TimeTableApp", ["ngMessages", "ngAnimate", "ngRoute", "ngSanitize"])
-            .directive('input', ['$filter', '$timeout', function ($filter, $timeout) { return new SgInputDirective($filter, $timeout); }])
+        var app = angular.module("TimeTableApp", [])
             .controller("TimeTableController", ['$scope', '$http', TimeTableController]);
     }
 
@@ -47,7 +46,10 @@ class TimeTableController {
 
     CurrentHourClass(hour: number, timeZone): string {
         var currentTimeZoneUtcHour = this.GetCurrentTimeZoneUtcHour();
+   
         if (hour == currentTimeZoneUtcHour) {
+            if (timeZone.Name == this.Model.CurrentTimeZone.Name)
+                return "danger";
             return "warning";
         }
         return "";
@@ -72,3 +74,4 @@ class TimeTableController {
 }
 
 
+new TimeTableApp();

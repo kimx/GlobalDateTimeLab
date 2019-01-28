@@ -1,38 +1,28 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "TimeTableApp";
 }
 <div ng-app="TimeTableApp" ng-controller="TimeTableController as vm">
-    <form name="editForm" id="editForm" novalidate>
-
-
-        <div class="row">
-            <div class="col-md-4 form-inline">
-                <select ng-model="vm.Model.CurrentTimeZone" ng-options="m.Name for m in vm.Model.TimeZones" class="form-control"></select>
-                @*<input type="number" min="0" max="23" name="currentHour" ng-model="vm.Model.CurrentHour" class="form-control" />:
-                <input type="number" min="0" max="59" name="currentMinute" ng-model="vm.Model.CurrentMinute" class="form-control" />*@
-                <input type="time" name="currentTime" ng-model="vm.Model.CurrentTime" class="form-control" />
-            </div>
-            <div class="col-md-12">
-                <table class="table table-responsive table-bordered table-hover">
-                    <tr ng-repeat="h in vm.Model.TimeZones track by h.Name">
-                        <th>{{h.Name}}</th>
-                        <td ng-click="vm.SelectHour($index,h)" ng-repeat="hour in vm.GetHours() track by $index" ng-class="vm.CurrentHourClass($index,h)" style="cursor:pointer">
-                            {{vm.CalTimeZoneHour($index,h)}}
-                        </td>
-                        <th>{{vm.GetCurrentDateTime(h) | date:'yyyy-MM-dd HH:mm'}}</th>
-                    </tr>
-                </table>
-            </div>
-        
+    <div class="row">
+        <div class="col-md-4 form-inline">
+            <select ng-model="vm.Model.CurrentTimeZone" ng-options="m.Name for m in vm.Model.TimeZones" class="form-control"></select>
+            <input type="time" name="currentTime" ng-model="vm.Model.CurrentTime" class="form-control" />
         </div>
-    </form>
+        <div class="col-md-12">
+            <table class="table table-responsive table-bordered table-hover">
+                <tr ng-repeat="h in vm.Model.TimeZones track by h.Name">
+                    <th>{{h.Name}}</th>
+                    <td ng-click="vm.SelectHour($index,h)" ng-repeat="hour in vm.GetHours() track by $index" ng-class="vm.CurrentHourClass($index,h)" style="cursor:pointer">
+                        {{vm.CalTimeZoneHour($index,h)}}
+                    </td>
+                    <th>{{vm.GetCurrentDateTime(h) | date:'yyyy-MM-dd HH:mm'}}</th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
 </div>
 
 @section scripts{
-
-    <script src="~/Scripts/App/Home.js"></script>
     <script src="~/Scripts/App/TimeTable.js"></script>
-    <script>
-        new TimeTableApp();
-    </script>
+
 }

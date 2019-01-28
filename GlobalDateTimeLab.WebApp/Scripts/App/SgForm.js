@@ -20,7 +20,6 @@ var SgFormsDirective = /** @class */ (function () {
         this.restrict = 'E';
         this.link = function ($scope, elm, attrs, ctrl) {
             $scope.$watch(attrs.name + ".$error.required.length", function (newValue) {
-                console.log("$valid:" + newValue);
                 SgFormsDirective.ShowFooterStaticPopover($scope[attrs.name].$error, attrs);
             }, true);
             setTimeout(function () {
