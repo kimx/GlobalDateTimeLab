@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GlobalDateTimeLab.Console.Lib
@@ -44,6 +45,15 @@ namespace GlobalDateTimeLab.Console.Lib
         public static DateTime GetTestSouthAfricaDateTime()
         {
             return new DateTime(2019, 1, 18, CurrentUtcHour + 2, 0, 0, DateTimeKind.Local);
+        }
+
+        public static DateTime GetCurrentCultureDateTime()
+        {
+            var customCulture = Thread.CurrentThread.CurrentCulture as CustomCultureInfo;
+            var utcHour = CurrentUtcHour;
+            if (customCulture != null)
+                utcHour = customCulture.UtcHours;
+            return DateTime.UtcNow.AddHours(utcHour);
         }
     }
 }

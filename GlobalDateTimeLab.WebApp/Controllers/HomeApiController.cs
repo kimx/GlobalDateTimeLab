@@ -1,10 +1,13 @@
-﻿using GlobalDateTimeLab.WebApp.Models;
+﻿using GlobalDateTimeLab.Console.Lib;
+using GlobalDateTimeLab.WebApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Controllers;
 
 namespace GlobalDateTimeLab.WebApp.Controllers
 {
@@ -15,15 +18,19 @@ namespace GlobalDateTimeLab.WebApp.Controllers
         [Route("GetTest")]
         public IEnumerable<string> GetTest()
         {
-            return new string[] { "value1", "value2" };
+            var currentCultureDateTime = DateTimeExtensions.GetCurrentCultureDateTime();
+            var currency = 987654321.1234.ToString(string.Format("C2"));
+            return new string[] { currentCultureDateTime.ToString(), currency };
         }
+
+       
 
         [HttpPost]
         [Route("PostModel")]
         public HomeModel PostModel([FromBody]HomeModel model)
         {
-            model.CreateDateTime = DateTime.UtcNow.AddHours(8);
-            model.CreateUtcDateTime = DateTime.UtcNow;
+            model.CreateDateTime = DateTimeExtensions.GetTestTaiwanDateTime();
+            model.CreateUtcDateTime = DateTimeExtensions.GetTestUtcDateTime();
             if (model.UseUnSpecified)
             {
                 model.CreateDateTime = DateTime.SpecifyKind(model.CreateDateTime, DateTimeKind.Unspecified);
