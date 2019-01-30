@@ -9,8 +9,25 @@ namespace GlobalDateTimeLab.Console.Lib
 {
     public class CustomCultureInfo : CultureInfo
     {
+        public static Dictionary<string, CustomCultureInfo> _dict = new Dictionary<string, CustomCultureInfo>();
+        private static readonly object _lockObject = new object();
+        public static CustomCultureInfo Create(string name, int utcHours)
+        {
+            string key = $"{name}_{utcHours}";
+            if (_dict.ContainsKey(key))
+                return _dict[key];
+            lock (_lockObject)
+            {
+                if (_dict.ContainsKey(key))
+                    return _dict[key];
+                var culture = new CustomCultureInfo(name, utcHours);
+                _dict.Add(key, culture);
+                return culture;
+            }
+        }
+
         public int UtcHours { get; set; }
-        public CustomCultureInfo(string name, int utcHours) : base(name)
+        private CustomCultureInfo(string name, int utcHours) : base(name)
         {
             this.UtcHours = utcHours;
         }

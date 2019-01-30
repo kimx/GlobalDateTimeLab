@@ -31,29 +31,29 @@ namespace GlobalDateTimeLab.Console.Lib
         }
 
         //Test Date
-        private static int CurrentUtcHour = 6;
+        private static int CurrentTimeZoneHour = 0;
 
         public static DateTime GetTestTaiwanDateTime()
         {
-            return new DateTime(2019, 1, 18, CurrentUtcHour + 8, 0, 0, DateTimeKind.Local);
+            return new DateTime(2019, 1, 18, CurrentTimeZoneHour + 8, 0, 0, DateTimeKind.Local);
         }
         public static DateTime GetTestUtcDateTime()
         {
-            return new DateTime(2019, 1, 18, CurrentUtcHour, 0, 0, DateTimeKind.Utc);
+            return new DateTime(2019, 1, 18, CurrentTimeZoneHour, 0, 0, DateTimeKind.Utc);
         }
 
         public static DateTime GetTestSouthAfricaDateTime()
         {
-            return new DateTime(2019, 1, 18, CurrentUtcHour + 2, 0, 0, DateTimeKind.Local);
+            return new DateTime(2019, 1, 18, CurrentTimeZoneHour + 2, 0, 0, DateTimeKind.Local);
         }
 
         public static DateTime GetCurrentCultureDateTime()
         {
             var customCulture = Thread.CurrentThread.CurrentCulture as CustomCultureInfo;
-            var utcHour = CurrentUtcHour;
+            var timeZoneHour = CurrentTimeZoneHour;
             if (customCulture != null)
-                utcHour = customCulture.UtcHours;
-            return DateTime.UtcNow.AddHours(utcHour);
+                timeZoneHour = customCulture.UtcHours;
+            return DateTime.UtcNow.AddHours(timeZoneHour);
         }
     }
 }

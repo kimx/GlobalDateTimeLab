@@ -3,6 +3,7 @@ using GlobalDateTimeLab.WebApp.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading;
 using System.Web;
 using System.Web.Http;
@@ -27,14 +28,14 @@ namespace GlobalDateTimeLab.WebApp
         {
             //    var culture = new CustomCultureInfo("en", 2);
 
-            HttpCookie timezoneHourCookie = System.Web.HttpContext.Current.Request.Cookies["timezoneHour"];
-            if (timezoneHourCookie != null)
+            HttpCookie timeZoneHourCookie = System.Web.HttpContext.Current.Request.Cookies["timezoneHour"];
+            if (timeZoneHourCookie != null)
             {
-                var culture = new CustomCultureInfo(Thread.CurrentThread.CurrentCulture.Name, Convert.ToInt32(timezoneHourCookie.Value));
+                var culture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, Convert.ToInt32(timeZoneHourCookie.Value));
                 culture.NumberFormat.CurrencySymbol = "R";
                 Thread.CurrentThread.CurrentCulture = culture;
             }
-
+           
 
         }
     }

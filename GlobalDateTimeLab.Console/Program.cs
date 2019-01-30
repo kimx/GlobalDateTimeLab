@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using GlobalDateTimeLab.Console.Lib;
 using GlobalDateTimeLab.Console.Entites;
 using GlobalDateTimeLab.Console.Models;
+using System.Threading;
+using System.Globalization;
 
 namespace GlobalDateTimeLab.Console
 {
@@ -16,10 +18,47 @@ namespace GlobalDateTimeLab.Console
     {
         static void Main(string[] args)
         {
-            預設值測試();
+            CustomCurrentCultureLab();
             //資料庫測試();
             System.Console.Read();
         }
+
+        static void CustomCurrentCultureLab()
+        {
+            Thread.CurrentThread.CurrentCulture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, 0);
+            System.Console.WriteLine($"UTC :          {DateTimeExtensions.GetCurrentCultureDateTime()}");
+
+            Thread.CurrentThread.CurrentCulture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, 2);
+            System.Console.WriteLine($"South Africa : {DateTimeExtensions.GetCurrentCultureDateTime()}");
+
+            Thread.CurrentThread.CurrentCulture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, 4);
+            System.Console.WriteLine($"Dubai :        {DateTimeExtensions.GetCurrentCultureDateTime()}");
+
+            Thread.CurrentThread.CurrentCulture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, 8);
+            System.Console.WriteLine($"Taiwan :       {DateTimeExtensions.GetCurrentCultureDateTime()}");
+
+            ShowCultureFormat(new CultureInfo("en"));
+            ShowCultureFormat(new CultureInfo("en-US"));
+            ShowCultureFormat(new CultureInfo("en-ZA"));
+            ShowCultureFormat(new CultureInfo("ar-AE"));//Arabic (United Arab Emirates) (ar-AE) - 杜拜
+            //foreach (var item in CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(o => o.Name.StartsWith("ar-")))
+            //{
+            //    System.Console.WriteLine($"{item.Name} : {item.DisplayName} : {item.EnglishName}");
+            //}
+        }
+
+        private static void ShowCultureFormat(CultureInfo cultureInfo)
+        {
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            System.Console.WriteLine($"{Thread.CurrentThread.CurrentCulture.Name} : {Thread.CurrentThread.CurrentCulture.DisplayName} : {Thread.CurrentThread.CurrentCulture.EnglishName}");
+            System.Console.WriteLine($"{DateTimeExtensions.GetCurrentCultureDateTime()}");
+            System.Console.WriteLine(1234567.5432.ToString("N2"));
+            System.Console.WriteLine(1234567.5432.ToString("C2"));
+            System.Console.WriteLine();
+        }
+
+
+
 
         static void 預設值測試()
         {
@@ -84,6 +123,35 @@ namespace GlobalDateTimeLab.Console
                 System.Console.WriteLine($"taiwanEntity : {taiwanEntity.CreateTime},{taiwanEntity.CreateTime?.Kind}");
 
             }
+        }
+
+        private static Object rndLock = new Object();
+        static void CustomCultureMultiThreadRandowLab()
+        {
+            System.Console.WriteLine("CustomCultureMultiThreadRandowLab-Start");
+            Random rnd = new Random();
+            var tasks = new List<Task<int>>();
+            for (int ctr = 1; ctr <= 20; ctr++)
+            {
+                tasks.Add(Task.Factory.StartNew(
+                 () =>
+                 {
+                     int s = 0;
+                     for (int n = 0; n <= 999; n++)
+                     {
+                         lock (rndLock)
+                         {
+                             s = rnd.Next(24);
+                             System.Threading.Thread.Sleep(1 * s);
+                             CustomCultureInfo.Create("en", s);
+                         }
+                     }
+                     return CustomCultureInfo._dict.Count;
+                 }));
+            }
+            Task.WaitAll(tasks.ToArray());
+            System.Console.WriteLine(CustomCultureInfo._dict.Count);
+            System.Console.WriteLine("CustomCultureMultiThreadRandowLab-End");
         }
 
     }
