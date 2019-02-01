@@ -12,7 +12,14 @@ namespace GlobalDateTimeLab.WebApp.Models
             Messages = new List<string>();
         }
 
+        public string UserNo { get; set; }
+
         public int TimezoneHour { get; set; }
+
+        public int UserDataTimezoneHour { get; set; }
+
+
+        public DateTime PricipleDateTime { get; set; }
 
         public DateTime CurrentCultureDateTime { get; set; }
 

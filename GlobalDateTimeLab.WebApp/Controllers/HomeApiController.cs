@@ -18,7 +18,7 @@ namespace GlobalDateTimeLab.WebApp.Controllers
         [Route("GetTest")]
         public IEnumerable<string> GetTest()
         {
-            var currentCultureDateTime = DateTimeExtensions.GetCurrentCultureDateTime();
+            var currentCultureDateTime = DateTimeExtensions.GetCustomCultureDateTime();
             var currency = 987654321.1234.ToString(string.Format("C2"));
             return new string[] { currentCultureDateTime.ToString(), currency };
         }

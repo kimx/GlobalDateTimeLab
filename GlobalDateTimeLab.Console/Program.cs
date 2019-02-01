@@ -11,31 +11,70 @@ using GlobalDateTimeLab.Console.Entites;
 using GlobalDateTimeLab.Console.Models;
 using System.Threading;
 using System.Globalization;
+using System.Security.Principal;
 
 namespace GlobalDateTimeLab.Console
 {
     class Program
     {
+        static Dictionary<string, string> _timeZoneHours = new Dictionary<string, string>();
         static void Main(string[] args)
         {
-            CustomCurrentCultureLab();
+            _timeZoneHours.Add("UTC", "0");
+            _timeZoneHours.Add("South Africa", "2");
+            _timeZoneHours.Add("Dubai", "4");
+            _timeZoneHours.Add("Taiwan", "8");
+
+            CustomPricipleLab();
             //資料庫測試();
             System.Console.Read();
         }
 
+
+        static void CustomPricipleLab()
+        {
+            foreach (var timeZone in _timeZoneHours)
+            {
+
+                Thread.CurrentPrincipal = new CustomPrincipal(new GenericIdentity(timeZone.Key), $"{timeZone.Key};security;{timeZone.Value}");
+                var priciple = DateTimeExtensions.GetThreadCustomPrincipal();
+                System.Console.WriteLine($"CompanyNo : {priciple.CompanyNo} ,TimeZoneHour : {priciple.TimeZoneHour}");
+                System.Console.WriteLine($"{DateTimeExtensions.GetUserThreadPricipleDateTime()}");
+
+            }
+
+
+            //Thread.CurrentPrincipal = new CustomPrincipal(new GenericIdentity("kimxinfo-console"), "1000;security;0");
+            //var priciple = DateTimeExtensions.GetThreadCustomPrincipal();
+            //System.Console.WriteLine($"UTC :            {DateTimeExtensions.GetUserThreadPricipleDateTime()} ,{priciple.TimeZoneHour}");
+
+            //Thread.CurrentPrincipal = new CustomPrincipal(new GenericIdentity("kimxinfo-console"), "1000;security;2");
+            //priciple = DateTimeExtensions.GetThreadCustomPrincipal();
+            //System.Console.WriteLine($"South Africa :   {DateTimeExtensions.GetUserThreadPricipleDateTime()} ,{priciple.TimeZoneHour}");
+
+            //Thread.CurrentPrincipal = new CustomPrincipal(new GenericIdentity("kimxinfo-console"), "1000;security;4");
+            //priciple = DateTimeExtensions.GetThreadCustomPrincipal();
+            //System.Console.WriteLine($"Dubai :          {DateTimeExtensions.GetUserThreadPricipleDateTime()} ,{priciple.TimeZoneHour}");
+
+            //Thread.CurrentPrincipal = new CustomPrincipal(new GenericIdentity("kimxinfo-console"), "1000;security;8");
+            //priciple = DateTimeExtensions.GetThreadCustomPrincipal();
+            //System.Console.WriteLine($"Taiwan :         {DateTimeExtensions.GetUserThreadPricipleDateTime()} ,{priciple.TimeZoneHour}");
+        }
+
+
         static void CustomCurrentCultureLab()
         {
             Thread.CurrentThread.CurrentCulture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, 0);
-            System.Console.WriteLine($"UTC :          {DateTimeExtensions.GetCurrentCultureDateTime()}");
+            System.Console.WriteLine($"UTC :          {DateTimeExtensions.GetCustomCultureDateTime()}");
 
             Thread.CurrentThread.CurrentCulture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, 2);
-            System.Console.WriteLine($"South Africa : {DateTimeExtensions.GetCurrentCultureDateTime()}");
+            System.Console.WriteLine($"South Africa : {DateTimeExtensions.GetCustomCultureDateTime()}");
 
             Thread.CurrentThread.CurrentCulture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, 4);
-            System.Console.WriteLine($"Dubai :        {DateTimeExtensions.GetCurrentCultureDateTime()}");
+            System.Console.WriteLine($"Dubai :        {DateTimeExtensions.GetCustomCultureDateTime()}");
 
             Thread.CurrentThread.CurrentCulture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, 8);
-            System.Console.WriteLine($"Taiwan :       {DateTimeExtensions.GetCurrentCultureDateTime()}");
+            System.Console.WriteLine($"Taiwan :       {DateTimeExtensions.GetCustomCultureDateTime()}");
 
             ShowCultureFormat(new CultureInfo("en"));
             ShowCultureFormat(new CultureInfo("en-US"));
@@ -51,7 +90,7 @@ namespace GlobalDateTimeLab.Console
         {
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             System.Console.WriteLine($"{Thread.CurrentThread.CurrentCulture.Name} : {Thread.CurrentThread.CurrentCulture.DisplayName} : {Thread.CurrentThread.CurrentCulture.EnglishName}");
-            System.Console.WriteLine($"{DateTimeExtensions.GetCurrentCultureDateTime()}");
+            System.Console.WriteLine($"{DateTimeExtensions.GetCustomCultureDateTime()}");
             System.Console.WriteLine(1234567.5432.ToString("N2"));
             System.Console.WriteLine(1234567.5432.ToString("C2"));
             System.Console.WriteLine();

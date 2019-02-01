@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
 
 namespace GlobalDateTimeLab.Console.Lib
 {
@@ -47,13 +49,41 @@ namespace GlobalDateTimeLab.Console.Lib
             return new DateTime(2019, 1, 18, CurrentTimeZoneHour + 2, 0, 0, DateTimeKind.Local);
         }
 
-        public static DateTime GetCurrentCultureDateTime()
+        public static DateTime GetCustomCultureDateTime()
         {
-            var customCulture = Thread.CurrentThread.CurrentCulture as CustomCultureInfo;
             var timeZoneHour = CurrentTimeZoneHour;
+            var customCulture = Thread.CurrentThread.CurrentCulture as CustomCultureInfo;
             if (customCulture != null)
                 timeZoneHour = customCulture.UtcHours;
             return DateTime.UtcNow.AddHours(timeZoneHour);
+        }
+
+        public static DateTime GetUserThreadPricipleDateTime()
+        {
+
+            return DateTime.UtcNow.AddHours(GetThreadTimeZoneHour());
+        }
+
+        private static int GetThreadTimeZoneHour()
+        {
+            CustomPrincipal customPrincipal = GetThreadCustomPrincipal();
+            if (customPrincipal != null)
+                return customPrincipal.TimeZoneHour;
+            return 2;
+
+        }
+
+        /// <summary>
+        /// 取得目前的登入身份
+        /// </summary>
+        /// <returns></returns>
+        public static CustomPrincipal GetThreadCustomPrincipal()
+        {
+            if (HostingEnvironment.IsHosted && HttpContext.Current != null)
+                return HttpContext.Current.User as CustomPrincipal;
+            if ((Thread.CurrentPrincipal != null) && (Thread.CurrentPrincipal.Identity != null))
+                return Thread.CurrentPrincipal as CustomPrincipal;
+            return null;
         }
     }
 }

@@ -28,41 +28,44 @@ namespace GlobalDateTimeLab.WebApp
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            //    var culture = new CustomCultureInfo("en", 2);
-
+            int timeZoneHour = 8;
+            //CurrentCulture Version
             HttpCookie timeZoneHourCookie = System.Web.HttpContext.Current.Request.Cookies["timezoneHour"];
             if (timeZoneHourCookie != null)
             {
-                int timeZoneHour = Convert.ToInt32(timeZoneHourCookie.Value);
+                timeZoneHour = Convert.ToInt32(timeZoneHourCookie.Value);
                 var culture = CustomCultureInfo.Create(Thread.CurrentThread.CurrentCulture.Name, timeZoneHour);
                 culture.NumberFormat.CurrencySymbol = "R";
                 System.Web.HttpContext.Current.Items.Add("culture-begin", $"Global:{culture.UtcHours}:{DateTime.Now}");
                 Thread.CurrentThread.CurrentCulture = culture;
 
-                if (Request.IsAuthenticated)
-                {
-                    //FormsIdentity id = (FormsIdentity)User.Identity;
-                    //MyFormsIdentity myFormsIdentity = new MyFormsIdentity(id.Ticket, timeZoneHour);
-                    Context.User = new CustomPrincipal(User.Identity, timeZoneHour);
-
-                    //https://blog.csdn.net/anihasiyou/article/details/79668267
-                    //https://blog.csdn.net/lglgsy456/article/details/20616489
-                    //若WinFomr or Console程式有用到時使用者資訊,就要設定如下:
-                    //而取值則先判斷HttpContext.Current null再用Thread.CurrentPrincipal 
-                    //這樣就可以作到Web及Win共用
-                    // Thread.CurrentPrincipal =  new CustomPrincipal(User.Identity, timeZoneHour);
-
-
-                }
-
-
-                if (timeZoneHourCookie.Value == "2")
-                    System.Threading.Thread.Sleep(10000);
+                //if (timeZoneHourCookie.Value == "2")
+                //    System.Threading.Thread.Sleep(10000);
                 System.Web.HttpContext.Current.Items.Add("culture-end", $"Global:{culture.UtcHours}:{DateTime.Now}");
 
             }
 
+            //CustomPrincipal Version 20190209 參考此版使用在專案上
+            if (Request.IsAuthenticated)
+            {
+                FormsIdentity id = (FormsIdentity)User.Identity;
+                Context.User = new CustomPrincipal(User.Identity, id.Ticket.UserData);
+            }
+            //else
+            //{
+            //    //兩者都要指定,CurrentPrincipal才有作用
+            //    Thread.CurrentPrincipal = new CustomPrincipal(new GenericIdentity("kimxinfo-without-formidentity"), 0);
+            //    Context.User = Thread.CurrentPrincipal;
+            //}
+
+
 
         }
+
+
     }
+
+
+
+
 }

@@ -62,6 +62,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,6 +90,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Lib\CustomCultureInfo.cs" />
+    <Compile Include="Lib\CustomPrincipal.cs" />
     <Compile Include="Lib\DateTimeExtensions.cs" />
     <Compile Include="Lib\JsonHelper.cs" />
     <Compile Include="Models\TestDto.cs" />

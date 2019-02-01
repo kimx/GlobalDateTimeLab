@@ -43,7 +43,8 @@ namespace GlobalDateTimeLab.WebApp.Controllers
             CustomCultureInfo customCultureInfo = Thread.CurrentThread.CurrentCulture as CustomCultureInfo;
             CultureModel model = new CultureModel();
             model.TimezoneHour = 0;
-            model.CurrentCultureDateTime = DateTimeExtensions.GetCurrentCultureDateTime();
+            model.CurrentCultureDateTime = DateTimeExtensions.GetCustomCultureDateTime();
+            model.PricipleDateTime = DateTimeExtensions.GetUserThreadPricipleDateTime();
             if (customCultureInfo != null)
                 model.TimezoneHour = customCultureInfo.UtcHours;
 
@@ -57,8 +58,10 @@ namespace GlobalDateTimeLab.WebApp.Controllers
             if (customPrincipal != null)
             {
                 model.Messages.Add($"MyFormsIdentity:{customPrincipal.Identity.Name}  : {customPrincipal.TimeZoneHour}");
+                model.UserDataTimezoneHour = customPrincipal.TimeZoneHour;
 
             }
+            model.UserNo = User.Identity?.Name;
             return View(model);
         }
 
@@ -77,10 +80,11 @@ namespace GlobalDateTimeLab.WebApp.Controllers
             return Redirect("Culture");
         }
 
-        public ActionResult Login(string userNo)
+        //https://stackoverrun.com/cn/q/5373741
+        public ActionResult Login(string userNo, int userDataTimezoneHour = 8)
         {
             var now = DateTime.UtcNow.ToLocalTime();
-            var ticket = new FormsAuthenticationTicket(1, userNo, now, now.Add(FormsAuthentication.Timeout), true, $"{1000};{8}", FormsAuthentication.FormsCookiePath);
+            var ticket = new FormsAuthenticationTicket(1, userNo, now, now.Add(FormsAuthentication.Timeout), true, $"1000;SecurityCode;{userDataTimezoneHour}", FormsAuthentication.FormsCookiePath);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket));
             cookie.HttpOnly = true;
             if (ticket.IsPersistent)
@@ -91,6 +95,14 @@ namespace GlobalDateTimeLab.WebApp.Controllers
                 cookie.Domain = FormsAuthentication.CookieDomain;
             base.Response.Cookies.Add(cookie);
             return Redirect("Culture");
+        }
+
+        public ActionResult LoginThread()
+        {
+            FormsAuthentication.SignOut();
+
+            return Redirect("Culture");
+
         }
     }
 }
