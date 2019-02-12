@@ -35,7 +35,6 @@ namespace GlobalDateTimeLab.Console
         {
             foreach (var timeZone in _timeZoneHours)
             {
-
                 Thread.CurrentPrincipal = new CustomPrincipal(new GenericIdentity(timeZone.Key), $"{timeZone.Key};security;{timeZone.Value}");
                 var priciple = DateTimeExtensions.GetThreadCustomPrincipal();
                 System.Console.WriteLine($"CompanyNo : {priciple.CompanyNo} ,TimeZoneHour : {priciple.TimeZoneHour}");

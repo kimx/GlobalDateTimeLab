@@ -8,23 +8,15 @@ using System.Web.Security;
 
 namespace GlobalDateTimeLab.Console.Lib
 {
-    public class CustomPrincipal : IPrincipal
+    public class CustomPrincipal : GenericPrincipal
     {
-        public IIdentity Identity { get; private set; }
-
         public string CompanyNo { get; set; }
         public string SecurityStamp { get; set; }
         public int TimeZoneHour { get; set; }
 
 
-        public bool IsInRole(string role)
+        public CustomPrincipal(IIdentity identity, string userData) : base(identity, null)
         {
-            return Roles.IsUserInRole(Identity.Name, role);
-        }
-
-        public CustomPrincipal(IIdentity identity, string userData)
-        {
-            this.Identity = identity;
             var userDataArray = userData.Split(';');
             if (userDataArray.Length >= 1)
                 CompanyNo = userDataArray[0];
