@@ -85,5 +85,14 @@ namespace GlobalDateTimeLab.Console.Lib
                 return Thread.CurrentPrincipal as CustomPrincipal;
             return null;
         }
+
+        #region Old ToUserUtcLab
+        public static DateTime ToUserTime(this DateTime dt,string userCulture)
+        {
+            TimeZoneInfo destinationTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userCulture);
+            DateTime dtUtc = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
+            return TimeZoneInfo.ConvertTime(dtUtc, destinationTimeZone);
+        }
+        #endregion
     }
 }

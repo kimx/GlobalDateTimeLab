@@ -25,11 +25,27 @@ namespace GlobalDateTimeLab.Console
             _timeZoneHours.Add("Dubai", "4");
             _timeZoneHours.Add("Taiwan", "8");
 
-            CustomPricipleLab();
+            ToUserTimeLab();
             //資料庫測試();
             System.Console.Read();
         }
 
+        static void ToUserTimeLab()
+        {
+            foreach (var info in TimeZoneInfo.GetSystemTimeZones())
+            {
+                if (info.Id=="Arabian Standard Time")
+                    System.Console.WriteLine(info.Id);
+            }
+            DateTime utc = DateTime.UtcNow;
+            DateTime za = utc.ToUserTime("South Africa Standard Time");
+            DateTime dubai = utc.ToUserTime("Arabian Standard Time");
+            DateTime taiwan = utc.ToUserTime("Taipei Standard Time");
+            System.Console.WriteLine(utc);
+            System.Console.WriteLine(za);
+            System.Console.WriteLine(dubai);
+            System.Console.WriteLine(taiwan);
+        }
 
         static void CustomPricipleLab()
         {

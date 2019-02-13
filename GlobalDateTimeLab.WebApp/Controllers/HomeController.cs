@@ -16,6 +16,10 @@ namespace GlobalDateTimeLab.WebApp.Controllers
     {
         public ActionResult Index()
         {
+            string userNo = "Kim";
+            string s = null;
+            short? t = null;
+            string c = $"{userNo};{s};{t}";
             return View();
         }
 
