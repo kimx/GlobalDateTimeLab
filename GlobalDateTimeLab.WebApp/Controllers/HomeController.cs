@@ -108,5 +108,10 @@ namespace GlobalDateTimeLab.WebApp.Controllers
             return Redirect("Culture");
 
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }
